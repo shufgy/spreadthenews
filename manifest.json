@@ -1,0 +1,18 @@
+{
+  "name": "Spread the news",
+  "short_name": "stn",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Curate lists of articles read on the Guardian",
+  "icons": {
+    "128": "images/guardian-logo-128.png"
+  },
+  "permissions": [
+    "https://secure.flickr.com/",
+    "storage"
+  ],
+  "browser_action": {
+    "default_icon": "images/guardian-logo-128.png",
+    "default_popup": "popup.html"
+  }
+}
