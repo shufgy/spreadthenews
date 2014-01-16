@@ -87,16 +87,37 @@ var histwin = {
     blah.innerHTML = window.localStorage.getItem('mything')
     document.body.appendChild(blah);
   },
+  append: function(value) {
+    histwin.putItem("mything", value);
+    histwin.show();
+  },
   store: function() {
     var blah = document.getElementById('storeme');
     if (blah.value == "") { return true; }
-    histwin.putItem("mything", blah.value);
+    histwin.append(blah.value)
     blah.value = "";
-    histwin.show();
+  },
+  grabhist: function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+      chrome.tabs.sendMessage(tabs[0].id, {method: "getGuHistory"}, function(response) {
+      r = response
+      console.log(r);
+      if (r && r.history && r.history.value) {
+        for (index = 0; index < r.history.value.length; ++index) {
+          item = r.history.value[index];
+          url = 'http://www.theguardian.com/' + item.id;
+          histwin.append(url)
+        }
+        //histwin.append(r.history);
+      }
+      });
+    });
   },
 };
 
 document.addEventListener('DOMContentLoaded', function () {
     var text = document.getElementById('storeme');
     text.addEventListener('change', histwin.store);
+    var hist = document.getElementById('grabHistory');
+    hist.addEventListener('click', histwin.grabhist);
 });

@@ -7,6 +7,12 @@
   "icons": {
     "128": "images/guardian-logo-128.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["http://www.theguardian.com/*"],
+      "js": ["grabhistory.js"]
+    }
+  ],
   "permissions": [
     "https://secure.flickr.com/",
     "storage"
