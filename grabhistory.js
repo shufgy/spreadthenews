@@ -9,7 +9,7 @@ if (!user) {
   localStorage['gu.readinglist'] = 'shufgy';
 }
 
-$.get("http://the.earth.li/~huggie/cgi-bin/spreadthenews.pl?getlist=" + user)
+$.get("http://the.earth.li/~huggie/cgi-bin/spreadthenews.pl?prettylist=" + user)
 .done(function( list ) {
   var blah = document.createElement('div');
   switch (user) {
@@ -33,8 +33,13 @@ $.get("http://the.earth.li/~huggie/cgi-bin/spreadthenews.pl?getlist=" + user)
   } else {
     for (index = 0; index < list.length; ++index) {
       item = list[index];
-      blah.innerHTML += '<p><a href="' + item + '">' + item + '</a></p>';
-      //blah.innerHTML += '<p>' + item + '</p>';
+      bingle = "";
+      bingle += '<span class="right-most-popular-item"><a href="' + item.url + '">';
+      if (item.thumbnail) {
+        bingle += '<img src="' + item.thumbnail + '">';
+      }
+      bingle += '<h3 class="right-most-popular-item__headline media__body">' + item.title + '</h3></a></span>';
+      blah.innerHTML += bingle;
     }
   }
 
