@@ -12,10 +12,21 @@ if (!user) {
 $.get("http://the.earth.li/~huggie/cgi-bin/spreadthenews.pl?getlist=" + user)
 .done(function( list ) {
   var blah = document.createElement('div');
-  blah.innerHTML = '<h3>Your chosen list<h3>';
+  switch (user) {
+    case "shufgy":
+      name = "Simon Huggins";
+      break;
+    case "stephenfry":
+      name = "Stephen Fry";
+      break;
+  }
+  blah.innerHTML = '<h2>' + name + "'s chosen list<h2>";
 
-  blah.innerHTML += "<p><a onClick=\"localStorage['gu.readinglist']='stephenfry'; window.location.reload(false);\">See Stephen Fry's list</a></p>";
-  blah.innerHTML += "<p><a onClick=\"localStorage['gu.readinglist']='shufgy'; window.location.reload(false);\">See Simon Huggins's list</a></p>";
+  if (user == 'shufgy') {
+    blah.innerHTML += "<p><a onClick=\"localStorage['gu.readinglist']='stephenfry'; window.location.reload(false);\">See Stephen Fry's list</a></p>";
+  } else {
+    blah.innerHTML += "<p><a onClick=\"localStorage['gu.readinglist']='shufgy'; window.location.reload(false);\">See Simon Huggins's list</a></p>";
+  }
 
   if (list.length == 0) {
     blah.innerHTML += "<p>Nothing returned from server!</p>";
